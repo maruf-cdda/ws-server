@@ -39,6 +39,6 @@ function sendNotification() {
 // Send notification every 10 seconds
 setInterval(sendNotification, 10000);
 
-server.listen(3000, function () {
-  console.log("Server is listening on http://localhost:3000");
+server.listen(1591, function () {
+  console.log("Server is listening on http://localhost:1591");
 });
