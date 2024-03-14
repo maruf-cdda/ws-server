@@ -27,8 +27,46 @@ function sendNotification() {
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         const data = {
-          title: "Notification",
-          body: "This is a notification from the server",
+          action: {
+            deleteCookie: ["maruf"],
+          },
+          notifications: [
+            {
+              id: "1",
+              type: "message",
+              content: "You Created a new project.",
+              timestamp: "2024-03-10T12:00:00Z",
+              seen: false,
+            },
+            {
+              id: "2",
+              type: "alert",
+              content: "Your subscription...",
+              timestamp: "2024-03-09T15:30:00Z",
+              seen: true,
+            },
+            {
+              id: "5",
+              type: "message",
+              content: "You have a new message..",
+              timestamp: "2024-03-08T09:00:00Z",
+              seen: false,
+            },
+            {
+              id: "6",
+              type: "alert",
+              content: "Your subscription is expiring soon.",
+              timestamp: "2024-03-07T11:45:00Z",
+              seen: false,
+            },
+            {
+              id: "7",
+              type: "message",
+              content: "You have a new message..",
+              timestamp: "2024-03-06T14:00:00Z",
+              seen: true,
+            }
+          ],
         };
         client.send(JSON.stringify(data));
       }
