@@ -65,7 +65,27 @@ function sendNotification() {
               content: "You have a new message..",
               timestamp: "2024-03-06T14:00:00Z",
               seen: true,
-            }
+            },
+          ],
+          cart: [
+            {
+              id: "1",
+              name: "Product 1",
+              price: 100,
+              quantity: 2,
+            },
+            {
+              id: "2",
+              name: "Product 2",
+              price: 200,
+              quantity: 1,
+            },
+            {
+              id: "3",
+              name: "Product 3",
+              price: 300,
+              quantity: 1,
+            },
           ],
         };
         client.send(JSON.stringify(data));
@@ -75,7 +95,7 @@ function sendNotification() {
 }
 
 // Send notification every 10 seconds
-setInterval(sendNotification, 10000);
+setInterval(sendNotification, 60000);
 
 server.listen(1591, function () {
   console.log("Server is listening on http://localhost:1591");
