@@ -1,6 +1,18 @@
 const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
+const { MongoClient } = require("mongodb"); // Import MongoClient from mongodb
+
+const uri =
+  "mongodb+srv://marufcdda:lcaL52eXMydKnVcQ@cluster0.jnpt1on.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: "1", // Assuming ServerApiVersion is a string
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
 const app = express();
 const server = http.createServer(app);
@@ -9,7 +21,10 @@ const wss = new WebSocket.Server({ server });
 wss.on("connection", function connection(ws) {
   console.log("Client connected");
 
-  ws.on("message", function incoming(message) {
+  ws.on("message", async function incoming(message) {
+    const db = client.db("emoto_bazar");
+    const collection = db.collection("cart");
+    const result = await collection.insertOne(JSON.parse(message));
     console.log("Received: %s", message);
     // Echo the received message back to the client
     ws.send(`You sent: ${message}`);
