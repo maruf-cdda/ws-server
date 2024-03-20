@@ -22,12 +22,24 @@ wss.on("connection", function connection(ws) {
   console.log("Client connected");
 
   ws.on("message", async function incoming(message) {
-    const db = client.db("emoto_bazar");
-    const collection = db.collection("cart");
-    const result = await collection.insertOne(JSON.parse(message));
-    console.log("Received: %s", message);
-    // Echo the received message back to the client
-    ws.send(`You sent: ${message}`);
+    try {
+      const db = client.db("emoto_bazar");
+      const collection = db.collection("cart");
+
+      // Assuming message is the data you receive from the client
+      const data = JSON.parse(message); // Parse the incoming message
+      const result = await collection.insertOne(data); // Insert the data into the collection
+
+      // After inserting the data, immediately send the current data of the collection to the client
+      const allData = await collection.find({}).toArray();
+      ws.send(JSON.stringify(allData));
+
+      console.log("Received: %s", message);
+      // Echo the received message back to the client
+      ws.send(`You sent: ${message}`);
+    } catch (error) {
+      console.error("Error processing message:", error);
+    }
   });
 
   ws.on("close", function close() {
