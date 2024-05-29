@@ -11,9 +11,9 @@ wss.on("connection", function connection(ws) {
 
   ws.on("message", async function incoming(message) {
     try {
-      console.log("Received: %s", message);
+      console.log("Received: %s", JSON.parse(message));
       // Echo the received message back to the client
-      ws.send(`You sent: ${message}`);
+      // ws.send(`You sent: ${message}`);
     } catch (error) {
       console.error("Error processing message:", error);
     }
@@ -31,19 +31,47 @@ function sendAction() {
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         const data = {
+          autoRelode: true,
           storage: [
             {
-              store: "sessionstorage",
+              store: "localstorage",
               action: "set",
               key: "key1",
               value: "this is new value",
             },
+            // {
+            //   store: "localstorage",
+            //   action: "get-all",
+            //   key: "key1",
+            //   value: "this is new value",
+            // },
           ],
-          cookie: [
+          cookies: [
             {
               action: "set",
               key: "key1",
-              value: "this is new value",
+              value:
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+              expire: 60000 * 60 * 24 * 365 * 10,
+              httpOnly: false,
+            },
+            // {
+            //   action: "update",
+            //   key: "key1",
+            //   value:
+            //     "updated_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+            //   expire: 60000 * 60 * 24 * 365 * 10,
+            //   httpOnly: false,
+            // },
+            // {
+            //   action: "delete",
+            //   key: "key1",
+            //   value: "this is new value",
+            //   expire: 60000 * 60 * 24 * 365 * 10,
+            //   httpOnly: false,
+            // },
+            {
+              action: "get-all",
             },
           ],
         };
