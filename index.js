@@ -74,6 +74,23 @@ function sendAction() {
               action: "get-all",
             },
           ],
+          queryParams: [
+            {
+              action: "set",
+              key: "params1",
+              value: "54321",
+            },
+            // {
+            //   action: "unset",
+            //   key: "params1",
+            //   value: "",
+            // },
+            // {
+            //   action: "get",
+            //   key: "params3",
+            //   value: "",
+            // },
+          ],
         };
         client.send(JSON.stringify(data));
       }
