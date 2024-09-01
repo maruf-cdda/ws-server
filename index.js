@@ -76,11 +76,13 @@ function sendAction() {
           ],
           queryParams: [
             {
+              id: "12345",
               action: "set",
               key: "params1",
-              value: "54321",
+              value: "6TytaydZx4",
             },
             // {
+            //   id: "54321",
             //   action: "unset",
             //   key: "params1",
             //   value: "",
